@@ -2,43 +2,16 @@
 <html>
 <head>
 	<title>HTML5 Drawing App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="styles.css">
+
 </head>
 <style>
-	*{box-sizing:border-box; moz-box-sizing:border-box;}
-	#myCanvas{border:2px solid #000; margin: 0 auto;width:100%; height:100%; }
-	#toolbar{width:100%; height:50px; padding:10px;position:fixed:top:0; background:#2f2f2f; color:#fff; font-family: sans-serif;position: fixed;}
-	#toolbar .radcontrol{width:30px; height:30px; padding:10px; border-radius: 3px; background-color:#4f4f4f; display:inline-block; text-align: center; padding-top:5px; margin:0 5px; cursor: pointer;}
-	#toolbar .tooloption{display: inline-block;}
-	#colors {float:right;}
-	#raidus {float: left;}
-	.swatch{cursor:pointer;width:30px; height:30px; border-radius:15px;box-shadow:inset 0px 1px 0px rgba(255,255,255,.5), 0 2px 2px 2px rgba(0,0,0, 0.5); display: inline-block; margin-left: 10px;}
-	.swatch.active{border:2px solid #fff;box-shadow:inset 0px 1px 2px rgba(0,0,0,.5)}
-	#clearCanvas, #undo, #restore{cursor:pointer;color:#fff; float:right; height:30px; padding: 10px; background-color:#4f4f4f; text-align: center; margin-right: 10px;border-radius: 3px;padding-top:5px;}
-
-	#loading {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(192, 192, 192, 0.5);
-    background-image: url("default.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-}
-#page {
-    display: none;
-}
-
 
 </style>
 <body style="margin: 0;">
 	<!--https://www.youtube.com/watch?v=m4sioSqlXhQ-->
-
 <div id="page">
-
 	<div id="toolbar">
 		<div class="tooloption" id="rad">
 			Radius <span id="radval">10</span>
@@ -58,10 +31,19 @@
 		<div id="restore">
 			Redo
 		</div>
+		<a href="save" id="save">
+			Save
+		</a>
+		<div id="eraser">
+			<i class="fa fa-eraser"></i>
+		</div>
 	</div>
-	<canvas id="myCanvas">
+<div id="canvasWrapper">
+		<canvas id="myCanvas">
 		Sorry, your browser does not support HTML5 canvas
 	</canvas>
+</div>
+
 </div>
 
 	<script type="text/javascript">
@@ -91,4 +73,6 @@ onReady(function () {
 
 <div id="loading"></div>
 
+
+<!--https://www.youtube.com/watch?v=mbf-7-7utUc-->
 <!--http://wineexplorer.brancottestate.com/attribute/varietal-->
