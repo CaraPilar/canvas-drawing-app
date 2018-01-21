@@ -9,16 +9,22 @@ var rect;
 var offsetx;
 var offsety;
 var eraserOn = false;
+var x;
+var y;
 
 init();
 
 function init() {
     canvas = document.getElementById('myCanvas');
+    canvas.width = 1000; //window.innerWidth;
+    canvas.height = 550; //window.innerHeight;
+    //canvas.width = canvas.clientWidth;
+    //canvas.height = canvas.clientHeight;
     dataURL = canvas.toDataURL();
     context = canvas.getContext('2d');
     rect = canvas.getBoundingClientRect();
-    canvas.width = 1000; //window.innerWidth;
-    canvas.height = 550; //window.innerHeight;
+
+
     dragging = false;
     context.lineWidth = (radius * 2);
     storeSnapshot();
@@ -35,7 +41,11 @@ function storeSnapshot() {
 //will put a circle down wherever the user clicks
 var putPoint = function(e) {
     if (dragging) {
-        context.lineTo(e.clientX - 174, e.clientY - 50);
+        x = e.clientX - canvas.offsetLeft;
+        y = e.clientY - canvas.offsetTop;
+        //context.lineTo(e.clientX - 174, e.clientY - 50);
+        context.lineTo(x, y);
+
         context.stroke();
         context.beginPath();
         if (eraserOn == true) {
@@ -43,10 +53,14 @@ var putPoint = function(e) {
         } else {
             context.globalCompositeOperation = "source-over";
         }
-        context.arc(e.clientX - 174, e.clientY - 50, radius, 0, 2 * Math.PI);
+        //context.arc(e.clientX - 174, e.clientY - 50, radius, 0, 2 * Math.PI);
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        
         context.fill();
         context.beginPath();
-        context.moveTo(e.clientX - 174, e.clientY - 50);
+        //context.moveTo(e.clientX - 174, e.clientY - 50);
+        context.moveTo(x, y);
+
     }
 }
 
