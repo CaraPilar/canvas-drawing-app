@@ -8,11 +8,12 @@ Features
 [x] Eraser
 [x] Background Fill Tool
 [x] Brush
-[] Pen
-[] Pencil
+[x] Pen
+[x] Pencil
 [x] Save
 [x] Clear Canvas
 [x] Undo/Redo
 [] Advanced Color Tool
 [] Text Input
 [] Drag & Drop Clip Art/Stickers
+[] Develop app in React

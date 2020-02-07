@@ -1,6 +1,7 @@
 var canvas, dataURL, context, dragging, x, y, brushColor, bgFillColor,
     radius = 10, cPushArray = new Array(), cStep = -1,
-    mouseup = false, mousedown = false, eraserOn = false, brushOn = false,
+    mouseup = false, mousedown = false, eraserOn = false, 
+    pencilOn = false, penOn = false,brushOn = false,
     bgFillOn = false;
 
 init();
@@ -75,7 +76,7 @@ var engage = (e) => {
         context.fillStyle = bgFillColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
-    if (brushOn || eraserOn) {
+    if (brushOn || eraserOn || pencilOn || penOn) {
         dragging = true;
         putPoint(e);
     }
@@ -139,17 +140,25 @@ var setRadius = (newRadius) => {
     radSpan.innerHTML = radius;
 }
 
+
+//Update decrease and increase tool so that it only applies when Brush is selected.
+
 // Decrease radius of drawing tool
 decRad.addEventListener('click', () => {
-    setRadius(radius - interval);
+    if(brushOn || eraserOn) {
+        setRadius(radius - interval);
+    }
 });
 
 // Increase radius of drawing tool
 incRad.addEventListener('click', () => {
-    if (radius % 1 !== 0) {
-        setRadius(parseInt(radius) + interval);
-    } else {
-        setRadius(radius + interval);
+    if(brushOn || eraserOn) {
+        console.log("Brush is apparently on");
+        if (radius % 1 !== 0) {
+            setRadius(parseInt(radius) + interval);
+        } else {
+            setRadius(radius + interval);
+        }
     }
 });
 
@@ -215,10 +224,13 @@ brushButton.addEventListener('click', setBrush);
 function setBrush() {
     eraserOn = false;
     bgFillOn = false;
+    pencilOn = false;
+    penOn = false;
     brushOn = true;
 
     /*Select current swatch */
     deselectTool();
+    setRadius(10);
 
     if (!brushButton.classList.contains('set')) {
         brushButton.className += ' set';
@@ -227,6 +239,56 @@ function setBrush() {
             active.className = 'swatch';
         }*/
     }
+}
+
+/* Pencil */
+var penButton = document.getElementById('pen');
+penButton.addEventListener('click', setPen);
+
+function setPen() {
+    eraserOn = false;
+    bgFillOn = false;
+    brushOn = false;
+    penOn = true;
+
+    deselectTool();
+    setRadius(1.5);
+
+    
+
+    if (!penButton.classList.contains('set')) {
+        penButton.className += ' set';
+        /*var active = document.getElementsByClassName('active')[0];
+        if (active) {
+            active.className = 'swatch';
+        }*/
+    }
+
+}
+
+/* Pencil */
+var pencilButton = document.getElementById('pencil');
+pencilButton.addEventListener('click', setPencil);
+
+function setPencil() {
+    eraserOn = false;
+    bgFillOn = false;
+    pencilOn = true;
+
+    deselectTool();
+    // When control is swtiched back to Brush, we need to find a way to set the Radius back 
+    setRadius(0.5);
+
+    
+
+    if (!pencilButton.classList.contains('set')) {
+        pencilButton.className += ' set';
+        /*var active = document.getElementsByClassName('active')[0];
+        if (active) {
+            active.className = 'swatch';
+        }*/
+    }
+
 }
 
 /* Background Fill */
@@ -259,6 +321,7 @@ function setEraser(e) {
     bgFillOn = false;
     brushOn = false;
     deselectTool()
+    setRadius(10);
 
     var eraser = document.getElementById('eraser');
     if (!eraser.classList.contains('set')) {
